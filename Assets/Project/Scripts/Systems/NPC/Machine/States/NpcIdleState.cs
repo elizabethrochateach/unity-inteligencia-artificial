@@ -32,7 +32,7 @@ public class NpcIdleState : NpcState
             return;
 
         int index = Random.Range(1, 4);
-        _controller.Animator.SetInteger("idle_index", index);
+        _controller.Animator.SetFloat("idle_index", index);
 
         _timeToChange = Random.Range(
             _controller.MinIdleChangeTime, _controller.MaxIdleChangeTime);

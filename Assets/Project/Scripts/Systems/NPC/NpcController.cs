@@ -7,6 +7,7 @@ public class NpcController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Animator animator;
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private MonoBehaviour health;
 
     [Header("Idle")]
     [SerializeField] private float minIdleChangeTime;
@@ -20,6 +21,7 @@ public class NpcController : MonoBehaviour
 
     public Animator Animator => animator;
     public NavMeshAgent Agent => agent;
+    public IHealth Health { get; private set;}
     
     public float ProbailityToPatrol => probabilityToPatrol;
     public float MinIdleChangeTime => minIdleChangeTime;
@@ -30,6 +32,8 @@ public class NpcController : MonoBehaviour
 
     private void Awake()
     {
+        Health = health.GetComponent<IHealth>();
+
         IGraph<NpcState> _graph = new OrderedGraph<NpcState>();
         _machine = new NpcMachine(_graph, this);
     }

@@ -8,7 +8,10 @@ public class NpcDeadState : NpcState
         
     }
 
-    public override bool Trigger => false;
+    public override bool Trigger
+    {
+        get => _controller.Health.Value == 0;
+    }
 
     public override void OnEnter()
     {
