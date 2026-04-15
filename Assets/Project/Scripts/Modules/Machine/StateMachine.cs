@@ -1,15 +1,15 @@
 
-public abstract class StateMachine<T> where T : StateObject
+public abstract class StateMachine
 {
-    private IGraph<T> _graph;
-    private T _current;
+    private IGraph<StateObject, StateTransition> _graph;
+    private StateObject _current;
 
-    public StateMachine(IGraph<T> graph)
+    public StateMachine(IGraph<StateObject, StateTransition> graph)
     {
         _graph = graph;
     }
 
-    public void Initialize(T initialState)
+    public void Initialize(StateObject initialState)
     {
         _current = initialState;
         _current?.OnEnter();
@@ -17,16 +17,16 @@ public abstract class StateMachine<T> where T : StateObject
 
     public void Update()
     {
-        T[] neighbors = _graph.GetNeighbors(_current);
-        if(neighbors != null || neighbors.Length > 0)
+        StateTransition[] transitions = _graph.GetNeighbors(_current);
+        if(transitions != null || transitions.Length > 0)
         {
-            foreach(var state in neighbors)
+            foreach(var transition in transitions)
             {
-                if(!state.Trigger)
+                if(!transition.Trigger())
                     continue;
 
                 _current?.OnExit();
-                _current = state;
+                _current = transition.Target;
                 _current?.OnEnter();
             }
         }

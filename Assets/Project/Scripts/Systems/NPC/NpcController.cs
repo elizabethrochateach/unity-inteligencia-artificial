@@ -28,13 +28,13 @@ public class NpcController : MonoBehaviour
     public float MaxIdleChangeTime => maxIdleChangeTime;
     public float MaxPatrolDistance => maxPatrolDistance;
 
-    private StateMachine<NpcState> _machine;
+    private StateMachine _machine;
 
     private void Awake()
     {
         Health = health.GetComponent<IHealth>();
 
-        IGraph<NpcState> _graph = new OrderedGraph<NpcState>();
+        var _graph = new OrderedGraph<StateObject, StateTransition>();
         _machine = new NpcMachine(_graph, this);
     }
 

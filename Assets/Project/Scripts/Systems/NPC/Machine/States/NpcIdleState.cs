@@ -11,15 +11,6 @@ public class NpcIdleState : NpcState
         
     }
 
-    public override bool Trigger
-    {
-        get
-        {
-            
-            return !_controller._isMoving;
-        }
-    }
-
     public override void OnEnter()
     {
         Debug.Log("Idle Enter");

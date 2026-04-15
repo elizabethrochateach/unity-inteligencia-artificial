@@ -11,15 +11,6 @@ public class NpcPatrolState : NpcState
         
     }
 
-    public override bool Trigger
-    {
-        get
-        {
-            float alpha = Random.Range(0.0f, 1.0f);
-            return alpha < _controller.ProbailityToPatrol;
-        }
-    }
-
     public override void OnEnter()
     {
         Vector3 direction = Random.onUnitSphere * _controller.MaxPatrolDistance;

@@ -1,12 +1,12 @@
 
-public interface IGraph<T>
+public interface IGraph<TVertex, TEdge>
 {
-    public void AddVertex(T vertex);
-    public void RemoveVertex(T vertex);
+    public void AddVertex(TVertex vertex);
+    public void RemoveVertex(TVertex vertex);
 
-    public void AddEdge(T from, T to);
-    public void RemoveEdge(T from, T to);
-    public bool HasEdge(T from, T to);
+    public void AddEdge(TVertex from, TEdge edge);
+    public void RemoveEdge(TVertex from, TEdge edge);
+    public bool HasEdge(TVertex from, TEdge edge);
 
-    public T[] GetNeighbors(T vertex);
+    public TEdge[] GetNeighbors(TVertex vertex);
 }

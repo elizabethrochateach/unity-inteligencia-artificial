@@ -1,60 +1,53 @@
 
 using System.Collections.Generic;
 
-public class OrderedGraph<T> : IGraph<T>
+public class OrderedGraph<TVertex, TEdge> : IGraph<TVertex, TEdge>
 {
-    private Dictionary<T, List<T>> _vertex;
+    private Dictionary<TVertex, List<TEdge>> _vertex;
 
     public OrderedGraph()
     {
         _vertex = new();
     }
 
-    public void AddVertex(T vertex)
+    public void AddVertex(TVertex vertex)
     {
         if(_vertex.ContainsKey(vertex))
             return;
-        _vertex.Add(vertex, new List<T>());
+        _vertex.Add(vertex, new List<TEdge>());
     }
 
-    public void RemoveVertex(T vertex)
+    public void RemoveVertex(TVertex vertex)
     {
         if(!_vertex.ContainsKey(vertex))
             return;
-
-        foreach(KeyValuePair<T, List<T>> kvp in _vertex)
-        {
-            RemoveEdge(kvp.Key, vertex);
-            RemoveEdge(vertex, kvp.Key);
-        }
-
         _vertex.Remove(vertex);
     }
 
-    public void AddEdge(T from, T to)
+    public void AddEdge(TVertex from, TEdge edge)
     {
-        if(!_vertex.ContainsKey(from) || !_vertex.ContainsKey(to))
+        if(!_vertex.ContainsKey(from))
             return;
-        _vertex[from].Add(to);
+        _vertex[from].Add(edge);
     }
 
-    public void RemoveEdge(T from, T to)
+    public void RemoveEdge(TVertex from, TEdge edge)
     {
-        if(!_vertex.ContainsKey(from) || !_vertex.ContainsKey(to))
+        if(!_vertex.ContainsKey(from))
             return;
-        _vertex[from].Remove(to);
+        _vertex[from].Remove(edge);
     }
 
-    public bool HasEdge(T from, T to)
+    public bool HasEdge(TVertex from, TEdge edge)
     {
-        if(!_vertex.TryGetValue(from, out List<T> neighbors) || !_vertex.ContainsKey(to))
+        if(!_vertex.TryGetValue(from, out List<TEdge> neighbors))
             return false;
-        return neighbors.Contains(to);
+        return neighbors.Contains(edge);
     }
 
-    public T[] GetNeighbors(T vertex)
+    public TEdge[] GetNeighbors(TVertex vertex)
     {
-        if(!_vertex.TryGetValue(vertex, out List<T> neighbors))
+        if(!_vertex.TryGetValue(vertex, out List<TEdge> neighbors))
             return null;
         return neighbors.ToArray();
     }

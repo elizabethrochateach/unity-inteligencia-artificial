@@ -6,7 +6,7 @@ public class GraphTesting : MonoBehaviour
 {
     private void Awake()
     {
-        UnorderedGraph<char> charGraph = new UnorderedGraph<char>();
+        UnorderedGraph<char, char> charGraph = new UnorderedGraph<char, char>();
 
         charGraph.AddVertex('a');
         charGraph.AddVertex('b');
@@ -39,7 +39,7 @@ public class GraphTesting : MonoBehaviour
         PrintGraph(vertex, charGraph);
     }
 
-    private void PrintGraph<T>(T[] vertex, IGraph<T> graph)
+    private void PrintGraph<T>(T[] vertex, IGraph<T, T> graph)
     {
         foreach(T v in vertex)
         {
