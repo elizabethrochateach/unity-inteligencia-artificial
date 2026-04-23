@@ -13,6 +13,7 @@ public class NpcPatrolState : NpcState
 
     public override void OnEnter()
     {
+        Debug.Log("Patrol");
         Vector3 direction = Random.onUnitSphere * _controller.MaxPatrolDistance;
         Vector3 sourcePosition = _controller.transform.position + direction;
         if(!NavMesh.SamplePosition(sourcePosition, out NavMeshHit hit, 
@@ -29,7 +30,7 @@ public class NpcPatrolState : NpcState
         _target = hit.position;
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
         Vector3 delta = _target - _controller.transform.position;
         if(delta.magnitude <= 0.1f)

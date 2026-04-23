@@ -1,21 +1,22 @@
 
-public abstract class StateMachine
+public abstract class BaseStateMachine : IMachine
 {
-    private IGraph<StateObject, StateTransition> _graph;
-    private StateObject _current;
+    private IGraph<IState, StateTransition> _graph;
+    private IState _current;
 
-    public StateMachine(IGraph<StateObject, StateTransition> graph)
+    public BaseStateMachine(IGraph<IState, StateTransition> graph)
     {
         _graph = graph;
     }
 
-    public void Initialize(StateObject initialState)
+    public void SetState(IState state)
     {
-        _current = initialState;
+        _current?.OnExit();
+        _current = state;
         _current?.OnEnter();
     }
 
-    public void Update()
+    public void Update(float deltaTime)
     {
         StateTransition[] transitions = _graph.GetNeighbors(_current);
         if(transitions != null || transitions.Length > 0)
@@ -31,6 +32,6 @@ public abstract class StateMachine
             }
         }
 
-        _current?.OnUpdate();
+        _current?.OnUpdate(deltaTime);
     }
 }

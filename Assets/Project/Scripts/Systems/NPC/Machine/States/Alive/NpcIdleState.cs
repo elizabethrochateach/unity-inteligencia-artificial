@@ -16,9 +16,9 @@ public class NpcIdleState : NpcState
         Debug.Log("Idle Enter");
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate(float deltaTime)
     {
-        _elapsedTime += Time.deltaTime;
+        _elapsedTime += deltaTime;
         if(_elapsedTime < _timeToChange)
             return;
 
