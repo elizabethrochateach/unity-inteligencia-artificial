@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class Membership
+public static class MembershipFunctions
 {
     public static float Gamma(float x, float a, float m)
     {
@@ -31,5 +31,17 @@ public static class Membership
         if (x > a && x <= b)
             return (x - a) / (b - a);
         return (d - x) / (d - c);
+    }
+
+    public static float Sigmoid(float x, float a, float c)
+    {
+        if (x <= a) return 0;
+        if (x >= c) return 1;
+
+        if (x <= ((a + c) / 2))
+            return 2 * (((x - a) / (c - a)) * ((x - a) / (c - a)));
+
+
+        return 1 - (2 * (((x - c) / (c - a)) * ((x - c) / (c - a))));
     }
 }

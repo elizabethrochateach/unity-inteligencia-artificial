@@ -2705,10 +2705,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4daa47d26970643934faa70257d0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FuzzyTesting
-  gammaA: 1
-  gammaM: 5
-  gammaS: 0
-  showGamma: 1
+  step: 0.01
+  height: 10
+  health: 0
+  distance: 0
 --- !u!4 &1104827889
 Transform:
   m_ObjectHideFlags: 0
@@ -4322,7 +4322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2075941131
 Transform:
   m_ObjectHideFlags: 0
