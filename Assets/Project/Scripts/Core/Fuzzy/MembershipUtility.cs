@@ -56,7 +56,7 @@ public static class MembershipUtility
         }
     }
 
-    public static void ShowSigmoid(Vector3 origin, float s, MembershipEvaluation evaluate,
+    public static void DrawSigmoid(Vector3 origin, float s, MembershipEvaluation evaluate,
         float a, float c)
     {
 

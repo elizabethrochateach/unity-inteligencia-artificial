@@ -32,71 +32,40 @@ public class FuzzyTesting : MonoBehaviour
     //[SerializeField] private bool showSigmoid;
 
     [SerializeField] private float step;
-    [SerializeField] private float height;
+    [SerializeField] private float scale;
 
+    [Header("Aggressiveness")]
     [SerializeField] private float health;
     [SerializeField] private float distance;
 
+    [Header("Detection")]
+    [SerializeField] private float time;
+    [SerializeField] private float height;
+
     private void Update()
     {
-        MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * height, 20, 40);
-        MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * height, 20, 40, 60, 80);
-        MembershipUtility.DrawGamma(transform.position, step, (y) => y * height, 60, 80);
+        //MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * height, 20, 40);
+        //MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * height, 20, 40, 60, 80);
+        //MembershipUtility.DrawGamma(transform.position, step, (y) => y * height, 60, 80);
 
-        MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * height, 1, 3);
-        MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * height, 1, 3, 6, 8);
-        MembershipUtility.DrawGamma(transform.position, step, (y) => y * height, 6, 8);
+        //MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * height, 1, 3);
+        //MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * height, 1, 3, 6, 8);
+        //MembershipUtility.DrawGamma(transform.position, step, (y) => y * height, 6, 8);
 
-        // Fuzzificacion (Grado de pertenencia)
-        float lowHealth = 1.0f - MembershipFunctions.Gamma(health, 20, 40);
-        float midHealth = MembershipFunctions.Trapezoid(health, 20, 40, 60, 80);
-        float highHealth = MembershipFunctions.Gamma(health, 60, 80);
+        //float aggressiveness = FuzzyAggressiveness.Evaluate(health, distance);
 
-        float closeDistance = 1.0f - MembershipFunctions.Gamma(distance, 1, 3);
-        float midDistance = MembershipFunctions.Trapezoid(distance, 1, 3, 6, 8);
-        float farDistance = MembershipFunctions.Gamma(distance, 6, 8);
+        MembershipUtility.DrawSigmoid(transform.position, step, (y) => (1.0f - y) * scale, 0, 7);
+        MembershipUtility.DrawSigmoid(transform.position, step, (y) => y * scale, 5, 12);
+        MembershipUtility.DrawSigmoid(transform.position, step, (y) => (1.0f - y) * scale, 12, 19);
+        MembershipUtility.DrawSigmoid(transform.position, step, (y) => y * scale, 17, 23);
 
-        // Reglas difusas
-        float rule1 = Mathf.Min(lowHealth, closeDistance); // 5
-        float rule2 = Mathf.Min(lowHealth, midDistance); // 2.5
-        float rule3 = Mathf.Min(lowHealth, farDistance); // 1
+        MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * scale, 1.0f, 1.2f);
+        MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * scale, 1.0f, 1.2f, 1.4f, 1.6f);
+        MembershipUtility.DrawGamma(transform.position, step, (y) => y * scale, 1.4f, 1.6f);
 
-        float rule4 = Mathf.Min(midHealth, closeDistance); // 40
-        float rule5 = Mathf.Min(midHealth, midDistance); // 30
-        float rule6 = Mathf.Min(midHealth, farDistance); // 20
+        float detection = FuzzyDetection.Evaluate(time, height);
+        print($"Detection range: {detection}");
 
-        float rule7 = Mathf.Min(highHealth, closeDistance); // 100
-        float rule8 = Mathf.Min(highHealth, midDistance); // 80
-        float rule9 = Mathf.Min(highHealth, farDistance); // 60
-
-        // Defuzzificacion (n1 / d1)
-        float n1 =
-            rule1 * 5 +
-            rule2 * 2.5f +
-            rule3 * 1 +
-            rule4 * 40 +
-            rule5 * 30 +
-            rule6 * 20 +
-            rule7 * 100 +
-            rule8 * 80 +
-            rule9 * 60;
-
-        float d1 =
-            rule1 +
-            rule2 +
-            rule3 +
-            rule4 +
-            rule5 +
-            rule6 +
-            rule7 +
-            rule8 +
-            rule9;
-
-        float aggressiveness = n1 / d1;
-        print($"Agresividad: {aggressiveness}");
-
-
-        
 
         //    if(showGamma && gammaS > 0)
         //    {
