@@ -37,10 +37,14 @@ public class FuzzyTesting : MonoBehaviour
     [Header("Aggressiveness")]
     [SerializeField] private float health;
     [SerializeField] private float distance;
+    [SerializeField] private float infectionTime;
 
     [Header("Detection")]
     [SerializeField] private float time;
     [SerializeField] private float height;
+
+    [Header("Damage")]
+    [SerializeField] private float speed;
 
     private void Update()
     {
@@ -52,19 +56,27 @@ public class FuzzyTesting : MonoBehaviour
         //MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * height, 1, 3, 6, 8);
         //MembershipUtility.DrawGamma(transform.position, step, (y) => y * height, 6, 8);
 
-        //float aggressiveness = FuzzyAggressiveness.Evaluate(health, distance);
+        MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * height, 16, 24);
+        MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * height, 16, 24, 48, 56);
+        MembershipUtility.DrawGamma(transform.position, step, (y) => y * height, 48, 56);
 
-        MembershipUtility.DrawSigmoid(transform.position, step, (y) => (1.0f - y) * scale, 0, 7);
-        MembershipUtility.DrawSigmoid(transform.position, step, (y) => y * scale, 5, 12);
-        MembershipUtility.DrawSigmoid(transform.position, step, (y) => (1.0f - y) * scale, 12, 19);
-        MembershipUtility.DrawSigmoid(transform.position, step, (y) => y * scale, 17, 23);
+        float aggressiveness = FuzzyAggressiveness.Evaluate2(health, distance, infectionTime);
+        //print($"Aggressiveness: {aggressiveness}");
 
-        MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * scale, 1.0f, 1.2f);
-        MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * scale, 1.0f, 1.2f, 1.4f, 1.6f);
-        MembershipUtility.DrawGamma(transform.position, step, (y) => y * scale, 1.4f, 1.6f);
+        float damage = FuzzyDamage.Evaluate(aggressiveness, speed);
+        print($"Aggressiveness: {aggressiveness}. Damage: {damage}");
 
-        float detection = FuzzyDetection.Evaluate(time, height);
-        print($"Detection range: {detection}");
+        //MembershipUtility.DrawSigmoid(transform.position, step, (y) => (1.0f - y) * scale, 0, 7);
+        //MembershipUtility.DrawSigmoid(transform.position, step, (y) => y * scale, 5, 12);
+        //MembershipUtility.DrawSigmoid(transform.position, step, (y) => (1.0f - y) * scale, 12, 19);
+        //MembershipUtility.DrawSigmoid(transform.position, step, (y) => y * scale, 17, 23);
+
+        //MembershipUtility.DrawGamma(transform.position, step, (y) => (1.0f - y) * scale, 1.0f, 1.2f);
+        //MembershipUtility.DrawTrapezoid(transform.position, step, (y) => y * scale, 1.0f, 1.2f, 1.4f, 1.6f);
+        //MembershipUtility.DrawGamma(transform.position, step, (y) => y * scale, 1.4f, 1.6f);
+
+        //float detection = FuzzyDetection.Evaluate(time, height);
+        //print($"Detection range: {detection}");
 
 
         //    if(showGamma && gammaS > 0)
